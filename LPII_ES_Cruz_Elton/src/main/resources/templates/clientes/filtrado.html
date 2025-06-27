@@ -2,92 +2,94 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Filtrado de Clientes</title>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Filtrado de Clientes</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-	<script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
-	<script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
 </head>
 
 <body>
-	<div class="container mt-5">
-		<div class="row mb-4 align-items-center">
-			<div class="col-md-10">
-				<h2 class="fw-bold text-primary"> Listado de clientes con filtros</h2>
-			</div>
-			<div class="col-md-2 text-end">
-				<a th:href="@{/clientes/nuevo}" class="btn btn-success w-100 shadow-sm">
-					<i class="fa-solid fa-plus me-1"></i> Nuevo
-				</a>
-			</div>
-		</div>
-		<form method="get" th:action="@{/clientes/filtrado}" th:object="${filtro}">
-			<div class="row mb-4">
-				<div class="col-md-3">
-					<label class="form-label fw-semibold">Tipo de Cliente</label>
-					<select class="form-select shadow-sm" th:field="*{idTipo}" onchange="this.form.submit()">
-						<option value="">-- Todos --</option>
-						<option th:each="item : ${tipos}" th:value="${item.idTipo}" th:text="${item.descripcion}"></option>
-					</select>
-				</div>
-				<div class="col-md-2 d-flex align-items-end">
-					<a th:href="@{/clientes/filtrado}" class="btn btn-outline-secondary w-100 shadow-sm">
-						<i class="fa-solid fa-arrows-rotate me-1"></i> Limpiar
-					</a>
-				</div>
-			</div>
-		</form>
+    <div class="container mt-5">
+        <div class="row mb-4 align-items-center">
+            <div class="col-md-10">
+                <h2 class="fw-bold text-primary"> Listado de clientes con filtros</h2>
+            </div>
+            <div class="col-md-2 text-end">
+                <a th:href="@{/clientes/nuevo}" class="btn btn-success w-100 shadow-sm">
+                    <i class="fa-solid fa-plus me-1"></i> Nuevo
+                </a>
+            </div>
+        </div>
 
-		<div class="table-responsive mb-5">
-			<table id="tblClientes" class="table table-hover table-striped align-middle shadow-sm">
-				<thead class="table-dark text-center">
-					<tr>
-						<th>#nro</th>
-						<th>Código de cliente</th>
-						<th>Nombre completo</th>
-						<th>Tipo de cliente</th>
-						<th>Teléfono de cliente</th>
-						<th>DNI de cliente</th>
-						<th>Acciones</th>
-					</tr>
-				</thead>
-				<tbody class="table-light">
-					<tr th:each="item, stat : ${lstCliente}">
-						<td th:text="${stat.count}" class="text-center"></td>
-						<td th:text="${item.codCliente}" class="text-center"></td>
-						<td th:text="${item.apeCliente + ' ' + item.nomCliente}" class="text-center"></td>
-						<td th:text="${item.tipoCliente.descripcion}" class="text-center"></td>
-						<td th:text="${item.telefono}" class="text-center"></td>
-						<td th:text="${item.dni}" class="text-center"></td>
-						<td class="text-center">
-							<a th:href="@{/clientes/edicion/{id}(id=${item.codCliente})}" class="btn btn-outline-secondary btn-sm shadow-sm" title="Editar">
-								<i class="fa-regular fa-pen-to-square"></i>
-							</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+        <form method="get" th:action="@{/clientes/filtrado}" th:object="${filtro}">
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Tipo Cliente</label>
+                    <select class="form-select shadow-sm" th:field="*{idTipo}" onchange="this.form.submit()">
+                        <option value="">-- Todos --</option>
+                        <option th:each="item : ${tipos}" th:value="${item.idTipo}" th:text="${item.descripcion}">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <a th:href="@{/clientes/filtrado}" class="btn btn-outline-secondary w-100 shadow-sm">
+                        <i class="fa-solid fa-arrows-rotate me-1"></i> Limpiar
+                    </a>
+                </div>
+            </div>
+        </form>
 
-		<th:block th:utext="${toast}"></th:block>
-	</div>
+        <div class="table-responsive mb-5">
+            <table id="tblClientes" class="table table-hover table-striped align-middle shadow-sm">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>DNI</th>
+                        <th>Fecha Nacimiento</th>
+                        <th>Tipo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="table-light">
+                    <tr th:each="item, stat : ${lstCliente}">
+                        <td th:text="${stat.count}" class="text-center"></td>
+                        <td th:text="${item.codCliente}" class="text-center"></td>
+                        <td th:text="${item.nomCliente + ' ' + item.apeCliente}" class="text-center"></td>
+                        <td th:text="${item.dni}" class="text-center"></td>
+                        <td th:text="${#temporals.format(item.fechaNac, 'dd/MM/yyyy')}" class="text-center"></td>
+                        <td th:text="${item.tipoCliente.descripcion}" class="text-center"></td>
+                        <td class="text-center">
+                            <a th:href="@{/clientes/edicion/{id}(id=${item.codCliente})}" class="btn btn-outline-secondary btn-sm shadow-sm" title="Editar">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-	<script>
-		$(document).ready(function () {
-			$('#tblClientes').DataTable({
-				language: {
-					url: 'https://cdn.datatables.net/plug-ins/2.0.3/i18n/es-ES.json',
-					search: "Filtro general :"
-				}
-			});
-		});
-	</script>
+        <th:block th:utext="${toast}"></th:block>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#tblClientes').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.0.3/i18n/es-ES.json',
+                    search: "Filtro general :",
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

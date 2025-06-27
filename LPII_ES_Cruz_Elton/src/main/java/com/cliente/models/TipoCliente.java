@@ -14,7 +14,7 @@ public class TipoCliente {
 	
 	@Id
 	@Column(name="id_tipo_cli")
-	private int idTipo;
+	private Integer idTipo;
 	
 	@Column(name="des_tipo_cli")
 	private String descripcion;

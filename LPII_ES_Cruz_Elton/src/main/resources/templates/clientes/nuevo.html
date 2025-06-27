@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Clientes - Nuevo</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <div class="container mt-4">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h1 class="text-center">Clientes - Nuevo</h1>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-6">
+                        <form th:action="@{/clientes/registrar}" method="post" th:object="${cliente}" novalidate>
+                            
+                            <div class="mb-3">
+                                <label for="codCliente">Código Cliente</label>
+                                <input type="text" class="form-control" placeholder="Ej: CLI001"
+                                    th:field="*{codCliente}"
+                                    th:classappend="${#fields.hasErrors('codCliente')} ? 'is-invalid' : ''" required />
+                                <div class="invalid-feedback" th:errors="*{codCliente}"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label for="nomCliente">Nombre</label>
+                                    <input type="text" class="form-control" placeholder="Nombre del cliente"
+                                        th:field="*{nomCliente}"
+                                        th:classappend="${#fields.hasErrors('nomCliente')} ? 'is-invalid' : ''" required />
+                                    <div class="invalid-feedback" th:errors="*{nomCliente}"></div>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="apeCliente">Apellido</label>
+                                    <input type="text" class="form-control" placeholder="Apellido del cliente"
+                                        th:field="*{apeCliente}"
+                                        th:classappend="${#fields.hasErrors('apeCliente')} ? 'is-invalid' : ''" required />
+                                    <div class="invalid-feedback" th:errors="*{apeCliente}"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label for="fechaNac">Fecha de nacimiento</label>
+                                    <input type="date" class="form-control"
+                                        th:field="*{fechaNac}"
+                                        th:classappend="${#fields.hasErrors('fechaNac')} ? 'is-invalid' : ''" required />
+                                    <div class="invalid-feedback" th:errors="*{fechaNac}"></div>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="dni">DNI</label>
+                                    <input type="text" class="form-control" placeholder="8 dígitos"
+                                        maxlength="8"
+                                        th:field="*{dni}"
+                                        th:classappend="${#fields.hasErrors('dni')} ? 'is-invalid' : ''" required />
+                                    <div class="invalid-feedback" th:errors="*{dni}"></div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="tipoCliente">Tipo Cliente</label>
+                                <select class="form-select" th:field="*{tipoCliente.idTipo}"
+                                    th:classappend="${#fields.hasErrors('tipoCliente')} ? 'is-invalid' : ''" required>
+                                    <option value="">--Seleccione--</option>
+                                    <option th:each="item : ${tipos}" th:value="${item.idTipo}" th:text="${item.descripcion}"></option>
+                                </select>
+                                <div class="invalid-feedback" th:errors="*{tipoCliente}"></div>
+                            </div>
+
+                            <button type="reset" class="btn btn-outline-secondary">
+                                <i class="fa-solid fa-eraser"></i> Limpiar
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-floppy-disk"></i> Registrar
+                            </button>
+                            <a th:href="@{/clientes/filtrado}" class="btn btn-dark">
+                                <i class="fa-solid fa-right-from-bracket"></i> Regresar
+                            </a>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <th:block th:utext="${alert}"></th:block>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
